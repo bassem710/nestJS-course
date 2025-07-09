@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 
 // Importing Entities
 import { User } from './users/user.entity';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { User } from './users/user.entity';
         database: configService.get<string>('DB_NAME'),
       }),
     }),
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
