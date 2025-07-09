@@ -2,12 +2,15 @@
 import { AppService } from './app.service';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+
+// Importing modules
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
+import { PostsModule } from './posts/posts.module';
 
 // Importing Entities
 import { User } from './users/user.entity';
-import { PostsModule } from './posts/posts.module';
+import { Post } from './posts/post.entity';
 
 @Module({
   imports: [
@@ -15,13 +18,12 @@ import { PostsModule } from './posts/posts.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    UsersModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        entities: [User],
+        entities: [User, Post],
         synchronize: true,
         port: configService.get<number>('DB_PORT', 5432),
         username: configService.get<string>('DB_USERNAME'),
@@ -30,6 +32,7 @@ import { PostsModule } from './posts/posts.module';
         database: configService.get<string>('DB_NAME'),
       }),
     }),
+    UsersModule,
     PostsModule,
   ],
   controllers: [AppController],
