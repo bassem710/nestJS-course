@@ -27,7 +27,7 @@ const ENV = process.env.NODE_ENV;
         type: 'postgres',
         entities: [User, Post],
         synchronize: true,
-        port: configService.get<number>('DB_PORT', 5432),
+        port: +configService.get<number>('DB_PORT', 5432),
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         host: configService.get<string>('DB_HOST'),
