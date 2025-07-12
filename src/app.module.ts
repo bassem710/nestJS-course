@@ -12,11 +12,13 @@ import { PostsModule } from './posts/posts.module';
 import { User } from './users/user.entity';
 import { Post } from './posts/post.entity';
 
+const ENV = process.env.NODE_ENV;
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath: ENV ? `.env.${ENV}` : '.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
